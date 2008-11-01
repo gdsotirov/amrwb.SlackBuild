@@ -7,7 +7,7 @@
 . ../slack-package.conf
 
 NAME=amrwb
-VERSION=7.0.0.2
+VERSION=7.0.0.3
 BUILD=1
 
 cd $TMP
@@ -24,12 +24,12 @@ CXXFLAGS=$SLKCFLAGS \
             --enable-shared=yes \
             --enable-static=no
 
-make || exit 1
+make -j4 || exit 1
 
 PKG="$TMP/package-$NAME"
 mkdir -p $PKG
 
-make -e DESTDIR=$PKG install
+make -e DESTDIR=$PKG install || exit 2
 
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
